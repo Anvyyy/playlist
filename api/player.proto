@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+option go_package = "github.com/Anvyyy/playlist/pkg/;pkg";
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+service MusicService {
+  rpc PlaySong(Empty) returns(Empty) {
+        option (google.api.http) = {
+            post: "/play"
+            body: "*"
+        };
+  }
+
+  rpc PauseSong(Empty) returns(Empty) {
+    option (google.api.http) = {
+        post: "/pause"
+        body: "*"
+    };
+  }
+
+  rpc AddSong(AddSongRequest) returns(Empty) {
+    option (google.api.http) = {
+        post: "/add-song"
+        body: "*"
+    };
+  }
+
+  rpc NextSong(Empty) returns(SongResponse) {
+    option (google.api.http) = {
+        post: "/next"
+        body: "*"
+    };
+  }
+
+  rpc PrevSong(Empty) returns(SongResponse) {
+    option (google.api.http) = {
+        post: "/prev"
+        body: "*"
+    };
+  }
+
+  rpc GetSong(RequestSong) returns(SongResponse) {
+      option (google.api.http) = {
+        get: "/get-song"
+      };
+  }
+}
+
+message Empty {}
+
+message RequestSong{
+  string name = 1;
+}
+
+message AddSongRequest {
+  string name = 1;
+  int32 duration = 2;
+}
+
+message PlaySongResponse {
+  string name = 1;
+  int32 duration = 2;
+}
+
+message SongResponse {
+  string name = 1;
+  int32 duration = 2;
+}
