@@ -14,6 +14,7 @@ import (
 	"google.golang.org/grpc"
 )
 
+//Run Server
 func Run(gRPCport, httpPort string) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

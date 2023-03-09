@@ -7,6 +7,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+//song structure
 type Song struct {
 	Duration int32
 	Title    string
@@ -14,6 +15,7 @@ type Song struct {
 	next     *Song
 }
 
+//playlist structure
 type Playlist struct {
 	head    *Song
 	tail    *Song
@@ -31,6 +33,8 @@ func New() *Playlist {
 	}
 }
 
+//add method 
+//add song in doubly linked list
 func (l *Playlist) Add(val int32, val2 string) {
 	newSong := &Song{Duration: val, Title: val2}
 	if l.head == nil {
@@ -44,6 +48,7 @@ func (l *Playlist) Add(val int32, val2 string) {
 	l.length++
 }
 
+//next song
 func (l *Playlist) Forward() (*Song, error) {
 	l.done <- struct{}{}
 	if l.current.next == nil {
@@ -52,6 +57,7 @@ func (l *Playlist) Forward() (*Song, error) {
 	return l.current.next, nil
 }
 
+//previous song
 func (l *Playlist) Backward() (*Song, error) {
 	if l.current.prev == nil {
 		return nil, fmt.Errorf("end list")
@@ -59,14 +65,17 @@ func (l *Playlist) Backward() (*Song, error) {
 	return l.current.prev, nil
 }
 
+//pause song
 func (l *Playlist) Pause() {
 	l.pause <- struct{}{}
 }
 
+//start playlist
 func (l *Playlist) Start() {
 	l.start <- struct{}{}
 }
 
+//song delete method 
 func (l *Playlist) DeleteSong(val string) error {
 	current := l.head
 
@@ -88,6 +97,7 @@ func (l *Playlist) DeleteSong(val string) error {
 	return fmt.Errorf("song not found")
 }
 
+// starts playback
 func (l *Playlist) Play() error {
 	var err error
 	currentNode := l.head
@@ -114,10 +124,12 @@ func (l *Playlist) Play() error {
 	return nil
 }
 
+// return current song
 func (l *Playlist) Get() *Song {
 	return l.current
 }
 
+// update title song
 func (l *Playlist) UpdateSong(old, new string) {
 	current := l.head
 	for current != nil {
