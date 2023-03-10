@@ -26,6 +26,6 @@ Prev воспроизвести предыдущую песню
 
 <pre><code>make all</code></pre>
 
-## Установка пакетов
+## Генерация proto
 
-<pre><code>make all</code></pre>
+<pre><code>make build</code></pre>

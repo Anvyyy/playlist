@@ -3,7 +3,7 @@ POST http://127.0.0.1:50081/add-song
 Content-Type: application/json
 
 {
-  "name": "test",
+  "name": "test1",
   "duration": 21
 }
 
@@ -11,15 +11,6 @@ Content-Type: application/json
 GET http://127.0.0.1:50081/get-song?name=test3
 Accept: application/json
 
-
-### PATCH request update song
-PATCH localhost:50081/update
-Content-Type: application/json
-
-{
-  "old_name": "test",
-  "new_name": "test2"
-}
 
 ### POST request play songs
 POST http://127.0.0.1:50081/play
@@ -33,11 +24,11 @@ Content-Type: application/json
 POST http://127.0.0.1:50081/prev
 Content-Type: application/json
 
-### POST request jump to prev song
+### POST request jump to update
 POST http://127.0.0.1:50081/update-song
 Content-Type: application/json
 
 {
-  "oldname": "test",
+  "oldname": "tes3431",
   "newname": "test222"
 }

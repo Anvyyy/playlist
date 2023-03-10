@@ -33,7 +33,7 @@ func New() *Playlist {
 	}
 }
 
-//add method 
+//add method
 //add song in doubly linked list
 func (l *Playlist) Add(val int32, val2 string) {
 	newSong := &Song{Duration: val, Title: val2}
@@ -75,7 +75,7 @@ func (l *Playlist) Start() {
 	l.start <- struct{}{}
 }
 
-//song delete method 
+//song delete method
 func (l *Playlist) DeleteSong(val string) error {
 	current := l.head
 
@@ -130,11 +130,13 @@ func (l *Playlist) Get() *Song {
 }
 
 // update title song
-func (l *Playlist) UpdateSong(old, new string) {
+func (l *Playlist) UpdateSong(old, new string) error {
 	current := l.head
 	for current != nil {
 		if current.Title == old {
 			current.Title = new
+			return nil
 		}
 	}
+	return fmt.Errorf("song not found")
 }
