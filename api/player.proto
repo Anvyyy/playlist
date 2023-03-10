@@ -46,6 +46,13 @@ service MusicService {
         get: "/get-song"
       };
   }
+
+  rpc UpdateSong(Update) returns(Empty) {
+    option (google.api.http) = {
+      get: "/update-song"
+    };
+}
+  
 }
 
 message Empty {}
@@ -67,4 +74,9 @@ message PlaySongResponse {
 message SongResponse {
   string name = 1;
   int32 duration = 2;
+}
+
+message Update{
+  string old_name = 1;
+  string new_name = 2;
 }

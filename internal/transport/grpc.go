@@ -69,7 +69,11 @@ func (p *Playlist) GetSong(ctx context.Context, req *pkg.RequestSong) (*pkg.Song
 	if song == nil {
 		return nil, status.Errorf(codes.Internal, "player isn't playing")
 	}
-	
-	return &pkg.SongResponse{
-	}, nil
+
+	return &pkg.SongResponse{}, nil
+}
+
+func (p *Playlist) UpdateSong(_ context.Context, req *pkg.Update) (*pkg.Empty, error) {
+	p.playlist.UpdateSong(req.OldName, req.NewName)
+	return &pkg.Empty{}, nil
 }
