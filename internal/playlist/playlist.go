@@ -80,17 +80,23 @@ func (l *Playlist) DeleteSong(val string) error {
 	current := l.head
 
 	for current != nil {
+		log.Info().Msgf("1")
 		if current.Title == val {
+			log.Info().Msgf("2")
 			if current.next == nil {
 				l.tail = current.prev
 				l.tail.next = nil
+				log.Info().Msgf("3")
 			} else if current.prev == nil {
 				l.head = current.next
 				l.head.prev = nil
+				log.Info().Msgf("4")
 			} else {
 				current.prev.next = current.next
 				current.next.prev = current.prev
+				log.Info().Msgf("5")
 			}
+			return nil
 		}
 		current = current.next
 	}
@@ -111,8 +117,6 @@ func (l *Playlist) Play() error {
 				ticker.Stop()
 			case <-l.done:
 				break LOOP
-			case <-l.pause:
-				ticker.Stop()
 			}
 		}
 		currentNode, err = l.Forward()

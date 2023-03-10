@@ -3,7 +3,7 @@ POST http://127.0.0.1:50081/add-song
 Content-Type: application/json
 
 {
-  "name": "test",
+  "name": "test2",
   "duration": 4
 }
 
@@ -40,4 +40,12 @@ Content-Type: application/json
 {
   "oldname": "test",
   "newname": "test333"
+}
+
+### POST request jump to delete
+POST http://127.0.0.1:50081/delete-song
+Content-Type: application/json
+
+{
+  "name": "test"
 }

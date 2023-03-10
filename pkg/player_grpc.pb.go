@@ -26,6 +26,7 @@ const (
 	MusicService_PrevSong_FullMethodName   = "/MusicService/PrevSong"
 	MusicService_GetSong_FullMethodName    = "/MusicService/GetSong"
 	MusicService_UpdateSong_FullMethodName = "/MusicService/UpdateSong"
+	MusicService_DeleteSong_FullMethodName = "/MusicService/DeleteSong"
 )
 
 // MusicServiceClient is the client API for MusicService service.
@@ -39,6 +40,7 @@ type MusicServiceClient interface {
 	PrevSong(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*SongResponse, error)
 	GetSong(ctx context.Context, in *RequestSong, opts ...grpc.CallOption) (*SongResponse, error)
 	UpdateSong(ctx context.Context, in *Update, opts ...grpc.CallOption) (*Empty, error)
+	DeleteSong(ctx context.Context, in *RequestSong, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type musicServiceClient struct {
@@ -112,6 +114,15 @@ func (c *musicServiceClient) UpdateSong(ctx context.Context, in *Update, opts ..
 	return out, nil
 }
 
+func (c *musicServiceClient) DeleteSong(ctx context.Context, in *RequestSong, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, MusicService_DeleteSong_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MusicServiceServer is the server API for MusicService service.
 // All implementations should embed UnimplementedMusicServiceServer
 // for forward compatibility
@@ -123,6 +134,7 @@ type MusicServiceServer interface {
 	PrevSong(context.Context, *Empty) (*SongResponse, error)
 	GetSong(context.Context, *RequestSong) (*SongResponse, error)
 	UpdateSong(context.Context, *Update) (*Empty, error)
+	DeleteSong(context.Context, *RequestSong) (*Empty, error)
 }
 
 // UnimplementedMusicServiceServer should be embedded to have forward compatible implementations.
@@ -149,6 +161,9 @@ func (UnimplementedMusicServiceServer) GetSong(context.Context, *RequestSong) (*
 }
 func (UnimplementedMusicServiceServer) UpdateSong(context.Context, *Update) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSong not implemented")
+}
+func (UnimplementedMusicServiceServer) DeleteSong(context.Context, *RequestSong) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSong not implemented")
 }
 
 // UnsafeMusicServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -288,6 +303,24 @@ func _MusicService_UpdateSong_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MusicService_DeleteSong_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestSong)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MusicServiceServer).DeleteSong(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MusicService_DeleteSong_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MusicServiceServer).DeleteSong(ctx, req.(*RequestSong))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MusicService_ServiceDesc is the grpc.ServiceDesc for MusicService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -322,6 +355,10 @@ var MusicService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateSong",
 			Handler:    _MusicService_UpdateSong_Handler,
+		},
+		{
+			MethodName: "DeleteSong",
+			Handler:    _MusicService_DeleteSong_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

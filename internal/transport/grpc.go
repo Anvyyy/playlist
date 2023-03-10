@@ -73,8 +73,16 @@ func (p *Playlist) GetSong(ctx context.Context, req *pkg.RequestSong) (*pkg.Song
 	return &pkg.SongResponse{}, nil
 }
 
-func (p *Playlist) UpdateSong(_ context.Context, req *pkg.Update) (*pkg.Empty, error) {
+func (p *Playlist) UpdateSong(ctx context.Context, req *pkg.Update) (*pkg.Empty, error) {
 	err := p.playlist.UpdateSong(req.OldName, req.NewName)
+	if err != nil {
+		return nil, status.Errorf(codes.NotFound, "song not found: %w", err)
+	}
+	return &pkg.Empty{}, nil
+}
+
+func (p *Playlist) DeleteSong(ctx context.Context, req *pkg.RequestSong) (*pkg.Empty, error) {
+	err := p.playlist.DeleteSong(req.Name)
 	if err != nil {
 		return nil, status.Errorf(codes.NotFound, "song not found: %w", err)
 	}

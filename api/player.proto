@@ -53,6 +53,14 @@ service MusicService {
       body: "*"
     };
 }
+
+rpc DeleteSong(RequestSong) returns(Empty) {
+  option (google.api.http) = {
+    post: "/delete-song"
+    body: "*"
+  };
+
+}
   
 }
 
