@@ -3,7 +3,7 @@ POST http://127.0.0.1:50081/add-song
 Content-Type: application/json
 
 {
-  "name": "test2",
+  "name": "test",
   "duration": 4
 }
 
@@ -24,11 +24,20 @@ Content-Type: application/json
 POST http://127.0.0.1:50081/prev
 Content-Type: application/json
 
-### POST request jump to update
+### POST request jump to update err
 POST http://127.0.0.1:50081/update-song
 Content-Type: application/json
 
 {
   "oldname": "tes3431",
   "newname": "test222"
+}
+
+### POST request jump to update
+POST http://127.0.0.1:50081/update-song
+Content-Type: application/json
+
+{
+  "oldname": "test",
+  "newname": "test333"
 }
