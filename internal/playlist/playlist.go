@@ -59,6 +59,7 @@ func (l *Playlist) Forward() (*Song, error) {
 
 //previous song
 func (l *Playlist) Backward() (*Song, error) {
+	l.done <- struct{}{}
 	if l.current.prev == nil {
 		return nil, fmt.Errorf("end list")
 	}
@@ -105,10 +106,10 @@ func (l *Playlist) DeleteSong(val string) error {
 // starts playback
 func (l *Playlist) Play() error {
 	var err error
-	currentNode := l.head
-	for currentNode != nil {
-		l.current = currentNode
-		ticker := time.NewTicker(time.Duration(currentNode.Duration))
+	current := l.head
+	for current != nil {
+		l.current = current
+		ticker := time.NewTicker(time.Duration(current.Duration))
 	LOOP:
 		for {
 			select {
@@ -118,7 +119,7 @@ func (l *Playlist) Play() error {
 				break LOOP
 			}
 		}
-		currentNode, err = l.Forward()
+		current, err = l.Forward()
 		if err != nil {
 			log.Err(err).Msgf("err jump to next song: %w", err)
 			return fmt.Errorf("err jump to next song: %w", err)
