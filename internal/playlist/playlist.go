@@ -80,21 +80,20 @@ func (l *Playlist) DeleteSong(val string) error {
 	current := l.head
 
 	for current != nil {
-		log.Info().Msgf("1")
 		if current.Title == val {
-			log.Info().Msgf("2")
 			if current.next == nil {
 				l.tail = current.prev
-				l.tail.next = nil
-				log.Info().Msgf("3")
+				if l.tail != nil {
+					l.tail.next = nil
+				}
 			} else if current.prev == nil {
 				l.head = current.next
-				l.head.prev = nil
-				log.Info().Msgf("4")
+				if l.head != nil {
+					l.head.prev = nil
+				}
 			} else {
 				current.prev.next = current.next
 				current.next.prev = current.prev
-				log.Info().Msgf("5")
 			}
 			return nil
 		}

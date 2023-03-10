@@ -3,7 +3,7 @@ POST http://127.0.0.1:50081/add-song
 Content-Type: application/json
 
 {
-  "name": "test2",
+  "name": "test",
   "duration": 4
 }
 
