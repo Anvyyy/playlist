@@ -137,6 +137,7 @@ func (l *Playlist) UpdateSong(old, new string) error {
 			current.Title = new
 			return nil
 		}
+		current = current.next
 	}
 	return fmt.Errorf("song not found")
 }

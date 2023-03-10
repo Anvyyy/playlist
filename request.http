@@ -3,8 +3,8 @@ POST http://127.0.0.1:50081/add-song
 Content-Type: application/json
 
 {
-  "name": "test1",
-  "duration": 21
+  "name": "test2",
+  "duration": 4
 }
 
 ### GET request get current song

@@ -75,8 +75,8 @@ func (p *Playlist) GetSong(ctx context.Context, req *pkg.RequestSong) (*pkg.Song
 
 func (p *Playlist) UpdateSong(_ context.Context, req *pkg.Update) (*pkg.Empty, error) {
 	err := p.playlist.UpdateSong(req.OldName, req.NewName)
-	if err == nil {
-		return &pkg.Empty{}, nil
+	if err != nil {
+		return nil, status.Errorf(codes.NotFound, "song not found: %w", err)
 	}
-	return nil, status.Errorf(codes.Internal, "song not found")
+	return &pkg.Empty{}, nil
 }
