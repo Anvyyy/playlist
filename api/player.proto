@@ -49,7 +49,7 @@ service MusicService {
 
   rpc UpdateSong(Update) returns(Empty) {
     option (google.api.http) = {
-      get: "/update-song"
+      post: "/update-song"
     };
 }
   
